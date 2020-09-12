@@ -40,10 +40,8 @@ public class GithubProvider {
         try {
             Response response = client.newCall(request).execute();
             String str = response.body().string();
-//            GitUser gitUser = JSON.parseObject(str, GitUser.class);
-            System.out.println(str);
             GitUser gitUser1 = JSON.parseObject(str, GitUser.class);
-//            System.out.println(gitUser1.getBio() + gitUser1.getId() +gitUser1.getName() + "Json");
+            System.out.println(gitUser1.getBio() + gitUser1.getId() +gitUser1.getName() + "Json");
             return gitUser1;
         } catch (IOException e) {
             e.printStackTrace();
