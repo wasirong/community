@@ -2,7 +2,9 @@ package com.lzt.ylu.community.controller;
 
 import com.lzt.ylu.community.dto.AccessTokenDTO;
 import com.lzt.ylu.community.dto.GitUser;
+import com.lzt.ylu.community.mapper.UserMapper;
 import com.lzt.ylu.community.provider.GithubProvider;
+import com.lzt.ylu.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.UUID;
 
 @Controller
 public class AuthorizeController {
@@ -24,6 +27,8 @@ public class AuthorizeController {
     @Value("${git.client.secret}")
     private String clientSecret;
 
+    @Autowired(required = false)
+    private UserMapper userMapper;
 
     @GetMapping("/callback")
     public String CallBack(@RequestParam(name = "code") String code,
@@ -36,14 +41,25 @@ public class AuthorizeController {
         accessTokenDTO.setClient_id(clientId);
         accessTokenDTO.setClient_secret(clientSecret);
         String accessToken = githubProvider.getAccessToken(accessTokenDTO);
-        GitUser user = githubProvider.getUser(accessToken);
+        GitUser gitUser = githubProvider.getUser(accessToken);
 //        if (user != null) {
 //
 //        } else {
 //            // Login fail
 //            return "redirect:/";
 //        }
-        request.getSession().setAttribute("user", user);
+        if (gitUser != null) {
+            //用户数据库存入
+            System.out.println("存入database");
+            User user = new User();
+            user.setName(gitUser.getName());
+            user.setToken(UUID.randomUUID().toString());
+            user.setAccountId(String.valueOf(gitUser.getId()));
+            user.setGmtCreate(System.currentTimeMillis());
+            user.setGmtModify(user.getGmtCreate());
+            userMapper.insert(user);
+        }
+        request.getSession().setAttribute("user", gitUser);
         // Login success
         return "redirect:/";
     }
