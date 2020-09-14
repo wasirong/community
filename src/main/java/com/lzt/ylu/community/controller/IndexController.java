@@ -11,6 +11,5 @@ public class IndexController {
     public String index() {
 //        model.addAttribute("name", name);
         return "index";
-
     }
 }
