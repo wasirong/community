@@ -1,7 +1,7 @@
 package com.lzt.ylu.community.controller;
 
-import com.lzt.ylu.community.mapper.UserMapper;
-import com.lzt.ylu.model.User;
+import com.lzt.ylu.community.mapper.UserInfoMapper;
+import com.lzt.ylu.community.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 public class IndexController {
 
     @Autowired
-    UserMapper userMapper;
+    UserInfoMapper userMapper;
 
     @GetMapping("/")
     public String index(HttpServletRequest request) {
@@ -28,7 +28,6 @@ public class IndexController {
                 }
             }
         }
-
         return "index";
     }
 }

@@ -1,13 +1,13 @@
 package com.lzt.ylu.community.mapper;
 
-import com.lzt.ylu.model.User;
+import com.lzt.ylu.community.model.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 @Mapper
-public interface UserMapper {
+public interface UserInfoMapper {
     @Insert("insert into User (name, account_id, token, gmt_create, gmt_modify) values (#{name}, #{accountId}, #{token}, #{gmtCreate}, #{gmtModify})")
     void insert(User user);
 

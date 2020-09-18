@@ -1,4 +1,4 @@
-package com.lzt.ylu.model;
+package com.lzt.ylu.community.model;
 
 public class User {
     private Integer id;
@@ -54,5 +54,17 @@ public class User {
 
     public void setGmtModify(Long gmtModify) {
         this.gmtModify = gmtModify;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", accountId='" + accountId + '\'' +
+                ", name='" + name + '\'' +
+                ", token='" + token + '\'' +
+                ", gmtCreate=" + gmtCreate +
+                ", gmtModify=" + gmtModify +
+                '}';
     }
 }
